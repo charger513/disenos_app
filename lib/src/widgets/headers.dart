@@ -65,3 +65,41 @@ class _HeaderDiagonalPainter extends CustomPainter {
     return true;
   }
 }
+
+class HeaderTriangular extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      height: double.infinity,
+      width: double.infinity,
+      child: CustomPaint(
+        painter: _HeaderTriangularPainter(),
+      ),
+    );
+  }
+}
+
+class _HeaderTriangularPainter extends CustomPainter {
+  @override
+  void paint(Canvas canvas, Size size) {
+    final paint = Paint();
+
+    // Propiedades
+    paint.color = Color(0xFF615AAB);
+    paint.style = PaintingStyle.fill;
+    paint.strokeWidth = 2;
+
+    final path = Path();
+
+    // Dibujar con el path y el lapiz (paint)
+    path.lineTo(size.width, size.height);
+    path.lineTo(size.width, 0);
+
+    canvas.drawPath(path, paint);
+  }
+
+  @override
+  bool shouldRepaint(CustomPainter oldDelegate) {
+    return true;
+  }
+}
