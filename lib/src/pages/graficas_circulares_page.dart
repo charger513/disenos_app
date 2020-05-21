@@ -17,7 +17,7 @@ class _GraficasCircularesPageState extends State<GraficasCircularesPage> {
         onPressed: () {
           setState(() {
             porcentaje += 10;
-            if(porcentaje > 100) {
+            if (porcentaje > 100) {
               porcentaje = 0;
             }
           });
@@ -27,10 +27,15 @@ class _GraficasCircularesPageState extends State<GraficasCircularesPage> {
         child: Container(
           width: 300,
           height: 300,
-          child: RadialProgress( porcentaje: porcentaje ),
+          child: RadialProgress(
+            porcentaje: porcentaje,
+            colorPrimario: Colors.pink,
+            colorSecundario: Colors.grey,
+            grosorSecundario: 10,
+            grosorPrimario: 10,
+          ),
         ),
       ),
-
     );
   }
 }
