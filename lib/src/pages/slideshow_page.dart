@@ -23,9 +23,9 @@ class _Dots extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
-          _Dot(),
-          _Dot(),
-          _Dot(),
+          _Dot(0),
+          _Dot(1),
+          _Dot(2),
         ],
       ),
     );
@@ -33,31 +33,54 @@ class _Dots extends StatelessWidget {
 }
 
 class _Dot extends StatelessWidget {
+  final int index;
+
+  _Dot(this.index);
+
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 12,
-      height: 12,
-      margin: const EdgeInsets.symmetric(horizontal: 5),
-      decoration: BoxDecoration(
-        color: Colors.grey,
-        shape: BoxShape.circle
-      )
-    );
+        width: 12,
+        height: 12,
+        margin: const EdgeInsets.symmetric(horizontal: 5),
+        decoration: BoxDecoration(color: Colors.grey, shape: BoxShape.circle));
   }
 }
 
-class _Slides extends StatelessWidget {
+class _Slides extends StatefulWidget {
+  @override
+  __SlidesState createState() => __SlidesState();
+}
+
+class __SlidesState extends State<_Slides> {
+  final pageViewController = PageController();
+
+  @override
+  void initState() {
+    super.initState();
+    pageViewController.addListener(() {
+      print('Página actual ${pageViewController.page}');
+    });
+  }
+
+  @override
+  void dispose() {
+    pageViewController.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
-        child: PageView(
-      children: <Widget>[
-        _Slide('assets/svgs/slide-1.svg'),
-        _Slide('assets/svgs/slide-2.svg'),
-        _Slide('assets/svgs/slide-3.svg'),
-      ],
-    ));
+      child: PageView(
+        controller: pageViewController,
+        children: <Widget>[
+          _Slide('assets/svgs/slide-1.svg'),
+          _Slide('assets/svgs/slide-2.svg'),
+          _Slide('assets/svgs/slide-3.svg'),
+        ],
+      ),
+    );
   }
 }
 
