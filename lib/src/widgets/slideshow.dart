@@ -19,7 +19,7 @@ class Slideshow extends StatelessWidget {
             Expanded(
               child: _Slides(slides),
             ),
-            _Dots(),
+            _Dots(totalSlides: slides.length),
           ],
         ),
       ),
@@ -28,6 +28,10 @@ class Slideshow extends StatelessWidget {
 }
 
 class _Dots extends StatelessWidget {
+  final int totalSlides;
+
+  _Dots({this.totalSlides});
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -35,11 +39,7 @@ class _Dots extends StatelessWidget {
       height: 70,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
-        children: <Widget>[
-          _Dot(0),
-          _Dot(1),
-          _Dot(2),
-        ],
+        children: List.generate(totalSlides, (index) => _Dot(index))
       ),
     );
   }
