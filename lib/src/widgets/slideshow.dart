@@ -7,12 +7,16 @@ class Slideshow extends StatelessWidget {
   final bool puntosArriba;
   final Color colorPrimario;
   final Color colorSecundario;
+  final double bulletPrimario;
+  final double bulletSecundario;
 
   Slideshow({
     @required this.slides,
     this.puntosArriba = false,
     this.colorPrimario = Colors.blue,
     this.colorSecundario = Colors.grey,
+    this.bulletPrimario = 12.0,
+    this.bulletSecundario = 12.0,
   });
 
   @override
@@ -22,9 +26,14 @@ class Slideshow extends StatelessWidget {
       child: SafeArea(
         child: Center(
           child: Builder(builder: (BuildContext context) {
-
-            Provider.of<_SlideshowModel>(context, listen: false).colorPrimario = colorPrimario;
-            Provider.of<_SlideshowModel>(context, listen: false).colorSecundario = colorSecundario;
+            Provider.of<_SlideshowModel>(context, listen: true).colorPrimario =
+                colorPrimario;
+            Provider.of<_SlideshowModel>(context, listen: true)
+                .colorSecundario = colorSecundario;
+            Provider.of<_SlideshowModel>(context, listen: true).bulletPrimario =
+                bulletPrimario;
+            Provider.of<_SlideshowModel>(context, listen: true)
+                .bulletSecundario = bulletSecundario;
 
             return _CrearEstructuraSlideshow(
               puntosArriba: puntosArriba,
@@ -90,16 +99,26 @@ class _Dot extends StatelessWidget {
     // final pageViewIndex = Provider.of<_SlideshowModel>(context).currentPage;
     final slideshowModel = Provider.of<_SlideshowModel>(context);
 
+    double tamano;
+    Color color;
+
+    if (slideshowModel.currentPage >= index - 0.5 &&
+        slideshowModel.currentPage < index + 0.5) {
+      tamano = slideshowModel.bulletPrimario;
+      color = slideshowModel.colorPrimario;
+    } else {
+      tamano = slideshowModel.bulletSecundario;
+      color = slideshowModel.colorSecundario;
+    }
+
+
     return AnimatedContainer(
       duration: Duration(milliseconds: 200),
-      width: 12,
-      height: 12,
+      width: tamano,
+      height: tamano,
       margin: const EdgeInsets.symmetric(horizontal: 5),
       decoration: BoxDecoration(
-        color: (slideshowModel.currentPage >= index - 0.5 &&
-                slideshowModel.currentPage < index + 0.5)
-            ? slideshowModel.colorPrimario
-            : slideshowModel.colorSecundario,
+        color: color,
         shape: BoxShape.circle,
       ),
     );
@@ -164,6 +183,8 @@ class _SlideshowModel with ChangeNotifier {
   double _currentPage = 0;
   Color _colorPrimario = Colors.blue;
   Color _colorSecundario = Colors.grey;
+  double _bulletPrimario = 12;
+  double _bulletSecundario = 12;
 
   double get currentPage => _currentPage;
 
@@ -183,6 +204,18 @@ class _SlideshowModel with ChangeNotifier {
 
   set colorSecundario(Color color) {
     _colorSecundario = color;
+    notifyListeners();
+  }
+
+  double get bulletPrimario => _bulletPrimario;
+  set bulletPrimario(double valor) {
+    _bulletPrimario = valor;
+    notifyListeners();
+  }
+
+  double get bulletSecundario => _bulletSecundario;
+  set bulletSecundario(double valor) {
+    _bulletSecundario = valor;
     notifyListeners();
   }
 }
