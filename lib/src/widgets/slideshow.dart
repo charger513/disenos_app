@@ -197,25 +197,21 @@ class _SlideshowModel with ChangeNotifier {
 
   set colorPrimario(Color color) {
     _colorPrimario = color;
-    notifyListeners();
   }
 
   Color get colorSecundario => _colorSecundario;
 
   set colorSecundario(Color color) {
     _colorSecundario = color;
-    notifyListeners();
   }
 
   double get bulletPrimario => _bulletPrimario;
   set bulletPrimario(double valor) {
     _bulletPrimario = valor;
-    notifyListeners();
   }
 
   double get bulletSecundario => _bulletSecundario;
   set bulletSecundario(double valor) {
     _bulletSecundario = valor;
-    notifyListeners();
   }
 }
