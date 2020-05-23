@@ -241,26 +241,21 @@ class HeaderWavesGradient extends StatelessWidget {
 class _HeaderWavesGradientPainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
-
-    final Rect rect = Rect.fromCircle(
-      center: Offset(0, 55),
-      radius: 180
-    );
+    final Rect rect = Rect.fromCircle(center: Offset(0, 55), radius: 180);
 
     final Gradient gradiente = LinearGradient(
-      begin: Alignment.topCenter,
-      end: Alignment.bottomCenter,
-      colors: <Color>[
-        Color(0xff6d05e8),
-        Color(0xffc012ff),
-        Color(0xff6d05fa),
-      ],
-      stops: [
-        0.2,
-        0.5,
-        0.8,
-      ]
-    );
+        begin: Alignment.topCenter,
+        end: Alignment.bottomCenter,
+        colors: <Color>[
+          Color(0xff6d05e8),
+          Color(0xffc012ff),
+          Color(0xff6d05fa),
+        ],
+        stops: [
+          0.2,
+          0.5,
+          0.8,
+        ]);
 
     final paint = Paint()..shader = gradiente.createShader(rect);
 
@@ -285,5 +280,26 @@ class _HeaderWavesGradientPainter extends CustomPainter {
   @override
   bool shouldRepaint(CustomPainter oldDelegate) {
     return true;
+  }
+}
+
+class IconHeader extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: double.infinity,
+      height: 300,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.only(bottomLeft: Radius.circular(80)),
+        gradient: LinearGradient(
+          begin: Alignment.topCenter,
+          end: Alignment.bottomCenter,
+          colors: <Color>[
+            Color(0xff526df6),
+            Color(0xff67acf2),
+          ],
+        ),
+      ),
+    );
   }
 }
