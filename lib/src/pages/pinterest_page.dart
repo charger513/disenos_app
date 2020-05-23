@@ -6,7 +6,29 @@ class PinterestPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: PinterestMenu(),
+      body: Stack(
+        children: <Widget>[
+          PinterestGrid(),
+          _PinterestMenuLocation(),
+        ],
+      ),
+    );
+  }
+}
+
+class _PinterestMenuLocation extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    final widthPantalla = MediaQuery.of(context).size.width;
+
+    return Positioned(
+      bottom: 30,
+      child: Container(
+        width: widthPantalla,
+        child: Align(
+          child: PinterestMenu(),
+        ),
+      )
     );
   }
 }
@@ -38,9 +60,7 @@ class _PinterestItem extends StatelessWidget {
     return Container(
       margin: EdgeInsets.all(5),
       decoration: BoxDecoration(
-        color: Colors.blue,
-        borderRadius: BorderRadius.circular(30)
-      ),
+          color: Colors.blue, borderRadius: BorderRadius.circular(30)),
       child: Center(
         child: CircleAvatar(
           backgroundColor: Colors.white,
