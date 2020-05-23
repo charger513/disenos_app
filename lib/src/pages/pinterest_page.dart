@@ -3,16 +3,20 @@ import 'dart:async';
 import 'package:disenos_app/src/widgets/pinterest_menu.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
+import 'package:provider/provider.dart';
 
 class PinterestPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Stack(
-        children: <Widget>[
-          PinterestGrid(),
-          _PinterestMenuLocation(),
-        ],
+    return ChangeNotifierProvider(
+      create: (_) => _MenuModel(),
+      child: Scaffold(
+        body: Stack(
+          children: <Widget>[
+            PinterestGrid(),
+            _PinterestMenuLocation(),
+          ],
+        ),
       ),
     );
   }
@@ -24,14 +28,13 @@ class _PinterestMenuLocation extends StatelessWidget {
     final widthPantalla = MediaQuery.of(context).size.width;
 
     return Positioned(
-      bottom: 30,
-      child: Container(
-        width: widthPantalla,
-        child: Align(
-          child: PinterestMenu(),
-        ),
-      )
-    );
+        bottom: 30,
+        child: Container(
+          width: widthPantalla,
+          child: Align(
+            child: PinterestMenu(mostrar: Provider.of<_MenuModel>(context).mostrar),
+          ),
+        ));
   }
 }
 
@@ -51,15 +54,14 @@ class _PinterestGridState extends State<PinterestGrid> {
     super.initState();
 
     controller.addListener(() {
-      if(controller.offset > scrollAnterior) {
-        print('ocultar');
+      if (controller.offset > scrollAnterior) {
+        Provider.of<_MenuModel>(context, listen: false).mostrar = false;
       } else {
-        print('mostrar');
+        Provider.of<_MenuModel>(context, listen: false).mostrar = true;
       }
 
       scrollAnterior = controller.offset;
     });
-
   }
 
   @override
@@ -101,5 +103,16 @@ class _PinterestItem extends StatelessWidget {
         ),
       ),
     );
+  }
+}
+
+class _MenuModel with ChangeNotifier {
+  bool _mostrar = true;
+
+  bool get mostrar => _mostrar;
+
+  set mostrar(bool valor) {
+    _mostrar = valor;
+    notifyListeners();
   }
 }
