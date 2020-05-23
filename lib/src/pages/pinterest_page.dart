@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:disenos_app/src/widgets/pinterest_menu.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
@@ -33,12 +35,43 @@ class _PinterestMenuLocation extends StatelessWidget {
   }
 }
 
-class PinterestGrid extends StatelessWidget {
+class PinterestGrid extends StatefulWidget {
+  @override
+  _PinterestGridState createState() => _PinterestGridState();
+}
+
+class _PinterestGridState extends State<PinterestGrid> {
   final List<int> items = List.generate(200, (index) => index);
+
+  ScrollController controller = ScrollController();
+  double scrollAnterior = 0;
+
+  @override
+  void initState() {
+    super.initState();
+
+    controller.addListener(() {
+      if(controller.offset > scrollAnterior) {
+        print('ocultar');
+      } else {
+        print('mostrar');
+      }
+
+      scrollAnterior = controller.offset;
+    });
+
+  }
+
+  @override
+  void dispose() {
+    controller.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
     return StaggeredGridView.countBuilder(
+      controller: controller,
       crossAxisCount: 4,
       itemCount: items.length,
       itemBuilder: (BuildContext context, int index) => _PinterestItem(index),
