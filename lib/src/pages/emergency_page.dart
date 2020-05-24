@@ -7,7 +7,13 @@ class EmergencyPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(child: BotonGordo())
+      body: Center(child: BotonGordo(
+        icon: FontAwesomeIcons.carCrash,
+        texto: 'Motor Accident',
+        onPressed: () {
+          print('Tap');
+        },
+      ))
     );
   }
 }
