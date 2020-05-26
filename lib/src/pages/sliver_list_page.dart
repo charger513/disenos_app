@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 
 class SliverListPage extends StatelessWidget {
@@ -19,7 +21,6 @@ class _MainScroll extends StatelessWidget {
     _ListItem('Family', Color(0xffF2A38A)),
     _ListItem('Subscriptions', Color(0xffF7CDD5)),
     _ListItem('Books', Color(0xffFCEBAF)),
-
     _ListItem('Orange', Color(0xffF08F66)),
     _ListItem('Family', Color(0xffF2A38A)),
     _ListItem('Subscriptions', Color(0xffF7CDD5)),
@@ -34,17 +35,66 @@ class _MainScroll extends StatelessWidget {
   Widget build(BuildContext context) {
     return CustomScrollView(
       slivers: <Widget>[
-        SliverAppBar(
+        // SliverAppBar(
+        //   floating: true,
+        //   backgroundColor: Colors.red,
+        //   elevation: 0,
+        //   title: Text('Hola Mundo'),
+        // ),
+
+        SliverPersistentHeader(
           floating: true,
-          backgroundColor: Colors.red,
-          elevation: 0,
-          title: Text('Hola Mundo'),
+          delegate: _SliverCustomHeaderDelegate(
+              minHeight: 190,
+              maxHeight: 200,
+              child: Container(
+                alignment: Alignment.centerLeft,
+                color: Colors.white,
+                child: _Titulo(),
+              )),
         ),
+
         SliverList(
-          delegate: SliverChildListDelegate(items),
+          delegate: SliverChildListDelegate([
+            ...items,
+            SizedBox(
+              height: 100,
+            ),
+          ]),
         )
       ],
     );
+  }
+}
+
+class _SliverCustomHeaderDelegate extends SliverPersistentHeaderDelegate {
+  final double minHeight;
+  final double maxHeight;
+  final Widget child;
+
+  _SliverCustomHeaderDelegate({
+    @required this.minHeight,
+    @required this.maxHeight,
+    @required this.child,
+  });
+
+  @override
+  Widget build(
+      BuildContext context, double shrinkOffset, bool overlapsContent) {
+    return SizedBox.expand(child: child);
+  }
+
+  @override
+  double get maxExtent => maxHeight;
+
+  @override
+  double get minExtent => minHeight;
+
+  @override
+  bool shouldRebuild(_SliverCustomHeaderDelegate oldDelegate) {
+    return maxHeight != oldDelegate.maxHeight ||
+        minHeight != oldDelegate.minHeight ||
+        child != oldDelegate.child;
   }
 }
 
