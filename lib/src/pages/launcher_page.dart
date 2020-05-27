@@ -1,3 +1,4 @@
+import 'package:disenos_app/src/routes/routes.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
@@ -22,12 +23,14 @@ class _ListaOpciones extends StatelessWidget {
       separatorBuilder: (context, i) => Divider(
         color: Colors.blue,
       ),
-      itemCount: 10,
+      itemCount: pageRoutes.length,
       itemBuilder: (context, i) => ListTile(
-        leading: FaIcon(FontAwesomeIcons.slideshare, color: Colors.blue),
-        title: Text('Hola Mundo'),
+        leading: FaIcon(pageRoutes[i].icon, color: Colors.blue),
+        title: Text(pageRoutes[i].titulo),
         trailing: Icon(Icons.chevron_right, color: Colors.blue),
-        onTap: () {},
+        onTap: () {
+          Navigator.of(context).push(MaterialPageRoute(builder: (ctx) => pageRoutes[i].page));
+        },
       ),
     );
   }
