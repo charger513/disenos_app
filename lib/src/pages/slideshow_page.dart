@@ -19,10 +19,13 @@ class SlideshowPage extends StatelessWidget {
 class MiSlideshow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+
+    final theme = Theme.of(context);
+
     return Slideshow(
-      bulletPrimario: 5,
+      bulletPrimario: 20,
       bulletSecundario: 12,
-      colorPrimario: Colors.red,
+      colorPrimario: theme.brightness == Brightness.dark ? theme.accentColor : Colors.red,
       colorSecundario: Colors.grey,
       slides: <Widget>[
         SvgPicture.asset('assets/svgs/slide-1.svg'),
