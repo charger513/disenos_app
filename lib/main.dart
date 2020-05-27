@@ -9,9 +9,16 @@
 // import 'package:disenos_app/src/pages/pinterest_page.dart';
 // import 'package:disenos_app/src/pages/sliver_list_page.dart';
 import 'package:disenos_app/src/pages/launcher_page.dart';
+import 'package:disenos_app/src/theme/theme.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
-void main() => runApp(MyApp());
+void main() => runApp(
+      ChangeNotifierProvider(
+        create: (_) => ThemeChanger(),
+        child: MyApp(),
+      ),
+    );
 
 class MyApp extends StatelessWidget {
   @override
