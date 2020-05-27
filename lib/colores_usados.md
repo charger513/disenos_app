@@ -2,3 +2,5 @@
 
 * accentColor
 * primaryColorLight
+* scaffoldBackgroundColor
+* textTheme.bodyText2.color
