@@ -1,3 +1,4 @@
+import 'package:disenos_app/src/pages/slideshow_page.dart';
 import 'package:disenos_app/src/routes/routes.dart';
 import 'package:disenos_app/src/theme/theme.dart';
 import 'package:flutter/material.dart';
@@ -7,14 +8,30 @@ import 'package:provider/provider.dart';
 class LauncherTabletPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final currentTheme = Provider.of<ThemeChanger>(context).currentTheme;
+    final appTheme = Provider.of<ThemeChanger>(context);
     return Scaffold(
       appBar: AppBar(
         title: Text('Diseños en Flutter - Tablet'),
-        backgroundColor: currentTheme.accentColor,
+        backgroundColor: appTheme.currentTheme.accentColor,
       ),
       drawer: _MenuPrincipal(),
-      body: _ListaOpciones(),
+      body: Row(
+        children: <Widget>[
+          Container(
+            width: 300,
+            height: double.infinity,
+            child: _ListaOpciones()
+          ),
+          Container(
+            width: 1,
+            height: double.infinity,
+            color: appTheme.darkTheme ? Colors.grey : appTheme.currentTheme.accentColor,
+          ),
+
+          Expanded(child: SlideshowPage())
+        ],
+      ),
+      // body: _ListaOpciones(),
     );
   }
 }
@@ -22,7 +39,6 @@ class LauncherTabletPage extends StatelessWidget {
 class _ListaOpciones extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-
     final currentTheme = Provider.of<ThemeChanger>(context).currentTheme;
 
     return ListView.separated(
